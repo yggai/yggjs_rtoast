@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 /**
  * Toast 类型枚举
  */
-export type ToastType = 'success' | 'error' | 'warning' | 'info'
+export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'debug'
 
 /**
  * Toast 位置枚举
@@ -99,6 +99,8 @@ export interface ToastContextType {
   warning: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
   /** 显示信息 Toast */
   info: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  /** 显示调试 Toast */
+  debug: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
   /** 关闭指定 Toast */
   dismiss: (id: string) => void
   /** 关闭所有 Toast */

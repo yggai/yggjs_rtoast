@@ -1,33 +1,34 @@
 
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ToastProvider } from 'yggjs_rtoast/tech'
-import { Navigation } from './components/Navigation'
+import { toast } from 'yggjs_rtoast/tech'
 import { HomePage } from './pages/HomePage'
 import { ToastDemoPage } from './pages/ToastDemoPage'
-import { DocumentationPage } from './pages/DocumentationPage'
 import './styles/global.css'
 import './styles/toast.css'
 
 function App() {
+  // 可选：启动时来一条欢迎信息
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      toast.info('欢迎使用 YggJS RToast 科技风全局消息组件！', { duration: 2000 })
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [])
   return (
-    <ToastProvider position="top-right" maxToasts={5}>
       <Router>
         <div className="tech-container">
           <h1 className="tech-title">YggJS RToast</h1>
           <p style={{ textAlign: 'center', marginBottom: '2rem', color: '#888' }}>
             专为React打造的科技风消息通知组件库
           </p>
-          
-          <Navigation />
-          
+
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/demo" element={<ToastDemoPage />} />
-            <Route path="/docs" element={<DocumentationPage />} />
           </Routes>
         </div>
       </Router>
-    </ToastProvider>
   )
 }
 

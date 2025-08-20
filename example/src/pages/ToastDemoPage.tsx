@@ -1,10 +1,18 @@
-import { useState } from 'react'
-import { useToast } from 'yggjs_rtoast/tech'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'yggjs_rtoast/tech'
+import type { ToastData } from 'yggjs_rtoast/tech'
 
 export const ToastDemoPage: React.FC = () => {
-  const { toast, success, error, warning, info, dismissAll, toasts } = useToast()
+  const [toasts, setToasts] = useState<ToastData[]>([])
+  const { success, error, warning, info } = toast
   const [customMessage, setCustomMessage] = useState('这是一条自定义消息')
   const [duration, setDuration] = useState(4000)
+
+  useEffect(() => {
+    // 订阅全局 toast 变化，仅用于示例展示数量
+    const unsubscribe = toast.subscribe(setToasts)
+    return unsubscribe
+  }, [])
 
   const handleBasicToasts = () => {
     success('操作成功！数据已保存')
@@ -20,7 +28,7 @@ export const ToastDemoPage: React.FC = () => {
   }
 
   const handleCustomToast = () => {
-    toast(customMessage, {
+    toast.toast(customMessage, {
       type: 'info',
       duration: duration,
       closable: true,
@@ -30,7 +38,7 @@ export const ToastDemoPage: React.FC = () => {
   }
 
   const handlePersistentToast = () => {
-    toast('这是一个持久化消息，不会自动消失', {
+    toast.toast('这是一个持久化消息，不会自动消失', {
       type: 'warning',
       duration: 0,
       closable: true,
@@ -51,7 +59,7 @@ export const ToastDemoPage: React.FC = () => {
   }
 
   const handleClickableToast = () => {
-    toast('点击这条消息查看详情', {
+    toast.toast('点击这条消息查看详情', {
       type: 'info',
       onClick: () => {
         alert('您点击了消息！')
@@ -155,7 +163,7 @@ export const ToastDemoPage: React.FC = () => {
           <button className="tech-button tech-button--success" onClick={handleSimpleTest}>
             🧪 简单测试
           </button>
-          <button className="tech-button--error" onClick={dismissAll}>
+          <button className="tech-button--error" onClick={() => toast.dismissAll()}>
             清除所有消息
           </button>
           <div style={{ color: '#00d4ff', fontSize: '14px' }}>

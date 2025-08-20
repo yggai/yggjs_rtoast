@@ -1,12 +1,15 @@
-// 导出组件
+// 全局 Toast（默认导出）
+export { default as default } from './global/toastManager'
+export { default as toast } from './global/toastManager'
+export { default as defaultToast } from './global/toastManager'
+
+// 兼容导出组件与Hook（保留但不再推荐）
 export { Toast } from './components/Toast'
 export { ToastContainer } from './components/ToastContainer'
-
-// 导出 Hooks 和 Provider
 export { useToast } from './hooks/useToast'
 export { ToastProvider, ToastContext } from './hooks/ToastProvider'
 
-// 导出类型
+// 类型导出
 export type {
   ToastType,
   ToastPosition,
@@ -18,5 +21,5 @@ export type {
   UseToastReturn,
 } from './types'
 
-// 导出样式 - 确保样式被正确打包
+// 样式导出 - 确保样式被正确打包
 import './styles/toast.css'

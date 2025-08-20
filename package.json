@@ -1,6 +1,6 @@
 {
   "name": "yggjs_rtoast",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "专为React打造的消息通知库 - A professional toast notification library for React",
   "author": "源滚滚",
   "license": "MIT",

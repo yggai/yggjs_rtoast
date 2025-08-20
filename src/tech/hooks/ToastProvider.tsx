@@ -86,6 +86,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     error: createTypedToast('error'),
     warning: createTypedToast('warning'),
     info: createTypedToast('info'),
+    debug: createTypedToast('debug' as ToastType),
     dismiss: removeToast,
     dismissAll: clearToasts,
     toasts,
