@@ -1,0 +1,89 @@
+{
+  "name": "yggjs_rtoast",
+  "version": "1.0.0",
+  "description": "专为React打造的消息通知库 - A professional toast notification library for React",
+  "author": "源滚滚",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "toast",
+    "notification",
+    "message",
+    "alert",
+    "tech-theme",
+    "ui-component"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tech": {
+      "import": "./dist/tech/index.esm.js",
+      "require": "./dist/tech/index.js",
+      "types": "./dist/tech/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:watch": "vite build --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "example": "cd example && pnpm dev",
+    "example:build": "cd example && pnpm build",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "terser": "^5.43.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuangungun/yggjs_rtoast.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yuangungun/yggjs_rtoast/issues"
+  },
+  "homepage": "https://github.com/yuangungun/yggjs_rtoast#readme"
+}
