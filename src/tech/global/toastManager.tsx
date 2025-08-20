@@ -1,7 +1,7 @@
 import React from 'react'
 import { createRoot, Root } from 'react-dom/client'
 import { ToastContainer } from '../components/ToastContainer'
-import type { ToastData, ToastOptions, ToastType, ToastPosition } from '../types'
+import type { ToastData, ToastOptions, ToastType, ToastPosition, ToastAPI } from '../types'
 
 // 默认配置（与之前 Provider 行为一致）
 const DEFAULT_OPTIONS: Required<Omit<ToastOptions, 'icon' | 'className' | 'style' | 'onClick' | 'onClose'>> = {
@@ -15,7 +15,7 @@ const DEFAULT_OPTIONS: Required<Omit<ToastOptions, 'icon' | 'className' | 'style
 // 生成唯一ID
 const generateId = (): string => `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
-class ToastManager {
+class ToastManager implements ToastAPI {
   private toasts: ToastData[] = []
   private root: Root | null = null
   private containerEl: HTMLElement | null = null
@@ -23,7 +23,7 @@ class ToastManager {
   private maxToasts: number = 5
   private className?: string
   private style?: React.CSSProperties
-  private listeners: Set<(toasts: ToastData[]) => void> = new Set()
+  private listeners: Set<(toasts: ReadonlyArray<ToastData>) => void> = new Set()
 
   private ensureContainer() {
     if (typeof document === 'undefined') return // SSR 保护
@@ -55,13 +55,13 @@ class ToastManager {
   }
 
   private notify() {
-    const snapshot = [...this.toasts]
+    const snapshot: ReadonlyArray<ToastData> = [...this.toasts]
     this.listeners.forEach((fn) => {
       try { fn(snapshot) } catch {}
     })
   }
 
-  subscribe(listener: (toasts: ToastData[]) => void) {
+  subscribe(listener: (toasts: ReadonlyArray<ToastData>) => void) {
     this.listeners.add(listener)
     // 初始推送一次
     listener([...this.toasts])
@@ -117,7 +117,7 @@ class ToastManager {
   debug = this.typed('debug' as ToastType)
 
   // 只读获取当前列表（非响应式）
-  getToasts(): ToastData[] {
+  getToasts(): ReadonlyArray<ToastData> {
     return [...this.toasts]
   }
 }

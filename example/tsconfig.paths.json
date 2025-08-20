@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "yggjs_rtoast": ["src/index.ts"],
+      "yggjs_rtoast/*": ["src/*"]
+    }
+  }
+}
+

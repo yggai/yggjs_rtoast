@@ -16,6 +16,7 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "bundler"
   },
+  "extends": "./tsconfig.paths.json",
   "include": [
     "src/**/*"
   ],

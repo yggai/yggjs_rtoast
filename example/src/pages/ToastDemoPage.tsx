@@ -10,7 +10,7 @@ export const ToastDemoPage: React.FC = () => {
 
   useEffect(() => {
     // 订阅全局 toast 变化，仅用于示例展示数量
-    const unsubscribe = toast.subscribe(setToasts)
+    const unsubscribe = toast.subscribe((list) => setToasts([...list]))
     return unsubscribe
   }, [])
 

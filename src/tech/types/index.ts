@@ -8,12 +8,12 @@ export type ToastType = 'success' | 'error' | 'warning' | 'info' | 'debug'
 /**
  * Toast 位置枚举
  */
-export type ToastPosition = 
-  | 'top-left' 
-  | 'top-center' 
+export type ToastPosition =
+  | 'top-left'
+  | 'top-center'
   | 'top-right'
-  | 'bottom-left' 
-  | 'bottom-center' 
+  | 'bottom-left'
+  | 'bottom-center'
   | 'bottom-right'
 
 /**
@@ -86,7 +86,28 @@ export interface ToastContainerOptions {
 }
 
 /**
- * Toast Context 类型
+ * 公共全局 Toast API 类型（仅暴露可用方法）
+ */
+export interface ToastAPI {
+  /** 订阅 Toast 列表变化（返回取消订阅函数） */
+  subscribe: (listener: (toasts: ReadonlyArray<ToastData>) => void) => () => void
+  /** 通用入口 */
+  toast: (message: ReactNode, options?: ToastOptions) => string
+  /** 类型化入口 */
+  success: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  error: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  warning: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  info: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  debug: (message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string
+  /** 关闭相关 */
+  dismiss: (id: string) => void
+  dismissAll: () => void
+  /** 获取当前 Toast 列表（只读） */
+  getToasts: () => ReadonlyArray<ToastData>
+}
+
+/**
+ * Toast Context 类型（向后兼容）
  */
 export interface ToastContextType {
   /** 显示 Toast */
