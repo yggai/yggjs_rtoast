@@ -7,43 +7,42 @@
 ![License](https://img.shields.io/npm/l/yggjs_rtoast?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge)
 
-**专为React打造的科技风消息通知组件库**
+A modern, sci‑fi themed toast notification library for React.
 
-[📚 文档](#文档) • [🚀 快速开始](#快速开始) • [💡 示例](#示例) • [🎨 特性](#特性)
+[Docs](#-documentation) • [Getting Started](#-getting-started) • [Examples](#-examples) • [Features](#-features) • [中文](./README.zh-CN.md)
 
 </div>
 
-## 🎯 特性
+## 🎯 Features
 
-- 🎨 **科技风设计** - 现代化的科技风格UI，支持渐变、发光效果和流畅动画
-- ⚡ **高性能** - 轻量级设计，零依赖，打包后仅几KB大小
-- 🔧 **易于使用** - 简单的API设计，支持TypeScript，开箱即用
-- 🎯 **功能丰富** - 支持多种类型、位置、动画效果和自定义配置
-- 📱 **响应式** - 完美适配移动端和桌面端，支持触摸操作
-- ♿ **无障碍** - 遵循WCAG标准，支持键盘导航和屏幕阅读器
-- 🌈 **主题支持** - 内置科技风主题，支持自定义主题扩展
+- 🎨 Sci‑fi themed design with gradients, glow, and smooth animations
+- ⚡ Lightweight and fast, zero external runtime dependencies
+- 🧰 Simple global API: toast.success/error/warning/info/debug
+- 🧩 TypeScript‑first with precise, documented types
+- ♿ Accessible by default: role="alert", aria‑live="polite"
+- 🌈 Theming ready via className/style and CSS variables
 
-## 📦 安装
+## 📦 Installation
 
 ```bash
-# 使用 npm
+# npm
 npm install yggjs_rtoast
 
-# 使用 yarn
+# yarn
 yarn add yggjs_rtoast
 
-# 使用 pnpm
+# pnpm
 pnpm add yggjs_rtoast
 ```
 
-## 🚀 快速开始
+## 🚀 Getting Started
 
-### 1. 基本使用
+### 1) Basic usage (global API)
 
 ```tsx
 import { ToastProvider, useToast } from 'yggjs_rtoast/tech'
 
-// 1. 在应用根组件中添加 ToastProvider
+// If you prefer context-based control, you can wrap your app with a provider.
 function App() {
   return (
     <ToastProvider>
@@ -52,7 +51,7 @@ function App() {
   )
 }
 
-// 2. 在组件中使用 useToast Hook
+// Then call hooks anywhere inside:
 function YourComponent() {
   const { success, error, warning, info } = useToast()
 
@@ -75,7 +74,7 @@ function YourComponent() {
 }
 ```
 
-### 2. 高级配置
+### 2) Advanced configuration (context mode)
 
 ```tsx
 import { ToastProvider, useToast } from 'yggjs_rtoast/tech'
@@ -124,27 +123,27 @@ function YourComponent() {
 }
 ```
 
-## 📚 API 文档
+## 📚 Documentation
 
-### ToastProvider
+### Global API (toast instance)
 
-ToastProvider 是一个React Context Provider，用于管理全局的Toast状态。
+Most users can call the global API directly. Context-based provider is optional.
 
-#### Props
+#### Methods
 
-| 属性 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `position` | `ToastPosition` | `'top-right'` | Toast显示位置 |
-| `maxToasts` | `number` | `5` | 最大显示数量 |
-| `className` | `string` | - | 容器样式类名 |
-| `style` | `React.CSSProperties` | - | 容器内联样式 |
-| `defaultOptions` | `Partial<ToastOptions>` | - | 全局默认配置 |
+| Method | Type | Description |
+|------|------|-------------|
+| `toast` | `(message: ReactNode, options?: ToastOptions) => string` | Show a toast |
+| `success` | `(message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string` | Success toast |
+| `error` | `(message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string` | Error toast |
+| `warning` | `(message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string` | Warning toast |
+| `info` | `(message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string` | Info toast |
 
-#### ToastPosition 类型
+| `debug` | `(message: ReactNode, options?: Omit<ToastOptions, 'type'>) => string` | Debug toast |
 
-```typescript
-type ToastPosition =
-  | 'top-left'
+| `dismiss` | `(id: string) => void` | Dismiss by id |
+| `dismissAll` | `() => void` | Dismiss all |
+| `getToasts` | `() => ReadonlyArray<ToastData>` | Snapshot (readonly) |
   | 'top-center'
   | 'top-right'
   | 'bottom-left'
@@ -186,9 +185,9 @@ Toast配置选项，用于自定义单个Toast的行为和外观。
 | `onClick` | `() => void` | - | 点击事件回调 |
 | `onClose` | `() => void` | - | 关闭事件回调 |
 
-## 💡 示例
+## 💡 Examples
 
-### 基本类型
+### Basic types
 
 ```tsx
 function BasicExample() {
@@ -205,7 +204,7 @@ function BasicExample() {
 }
 ```
 
-### 自定义配置
+### Custom options
 
 ```tsx
 function CustomExample() {
@@ -226,7 +225,7 @@ function CustomExample() {
 }
 ```
 
-### 持久化消息
+### Persistent toast
 
 ```tsx
 function PersistentExample() {
@@ -247,7 +246,7 @@ function PersistentExample() {
 }
 ```
 
-### 批量操作
+### Batch
 
 ```tsx
 function BatchExample() {
@@ -292,9 +291,9 @@ YggJS RToast 使用CSS变量，您可以轻松自定义主题：
 }
 ```
 
-## 🛠️ 开发
+## 🛠️ Development
 
-### 本地开发
+### Local development
 
 ```bash
 # 克隆项目
@@ -314,7 +313,7 @@ pnpm build
 pnpm example
 ```
 
-### 项目结构
+### Project structure
 
 ```
 yggjs_rtoast/
@@ -344,11 +343,11 @@ pnpm test:coverage
 pnpm test:watch
 ```
 
-## 🤝 贡献
+## 🤝 Contributing
 
-我们欢迎所有形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解详细信息。
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-### 贡献方式
+### How to contribute
 
 1. Fork 本项目
 2. 创建您的特性分支 (`git checkout -b feature/AmazingFeature`)
@@ -356,32 +355,32 @@ pnpm test:watch
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 打开一个 Pull Request
 
-### 开发规范
+### Guidelines
 
 - 使用 TypeScript 编写代码
 - 遵循 ESLint 规则
 - 编写单元测试
 - 更新相关文档
 
-## 📄 许可证
+## 📄 License
 
-本项目基于 [MIT 许可证](LICENSE) 开源。
+MIT © YggJS
 
-## 🙏 致谢
+## 🙏 Acknowledgements
 
-感谢所有为这个项目做出贡献的开发者！
+Thanks to all contributors!
 
-## 📞 联系我们
+## 📞 Contact
 
-- 作者：源滚滚
+- Author: Yuangungun
 - GitHub：[https://github.com/yuangungun/yggjs_rtoast](https://github.com/yuangungun/yggjs_rtoast)
-- 问题反馈：[https://github.com/yuangungun/yggjs_rtoast/issues](https://github.com/yuangungun/yggjs_rtoast/issues)
+- Issues: https://github.com/yuangungun/yggjs_rtoast/issues
 
 ---
 
 <div align="center">
 
-**如果这个项目对您有帮助，请给我们一个 ⭐️**
+**If you find this project useful, please give it a ⭐️**
 
 Made with ❤️ by [源滚滚](https://github.com/yuangungun)
 
