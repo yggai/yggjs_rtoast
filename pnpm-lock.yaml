@@ -91,8 +91,8 @@ importers:
         specifier: ^6.20.1
         version: 6.30.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       yggjs_rtoast:
-        specifier: file:..
-        version: file:(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: latest
+        version: 1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.2.37
@@ -2786,8 +2786,8 @@ packages:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
 
-  'yggjs_rtoast@file:':
-    resolution: {directory: '', type: directory}
+  yggjs_rtoast@1.0.1:
+    resolution: {integrity: sha512-K0VkE7bucJsfjYl8MrMRqytZjNG0sJVuj0WjiANhlgN0sbI7LZ0lxY9aMtbI/5kpA+JMgnfqeqyKRvlS87e+nA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -6037,7 +6037,7 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
-  yggjs_rtoast@file:(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  yggjs_rtoast@1.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       clsx: 2.1.1
       react: 18.3.1
