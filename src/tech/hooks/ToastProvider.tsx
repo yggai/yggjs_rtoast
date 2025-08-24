@@ -7,6 +7,12 @@ import {
   ToastContainerOptions,
   ToastType 
 } from '../types'
+import { 
+  DEFAULT_TOAST_CONFIG,
+  DEFAULT_MAX_TOASTS,
+  DEFAULT_POSITION,
+  ID_LENGTH
+} from '../constants'
 
 export const ToastContext = createContext<ToastContextType | null>(null)
 
@@ -15,23 +21,17 @@ interface ToastProviderProps extends ToastContainerOptions {
 }
 
 // 默认配置
-const DEFAULT_OPTIONS: Required<Omit<ToastOptions, 'icon' | 'className' | 'style' | 'onClick' | 'onClose'>> = {
-  type: 'info',
-  duration: 4000,
-  closable: true,
-  animation: 'slide',
-  pauseOnHover: true,
-}
+const DEFAULT_OPTIONS: Required<Omit<ToastOptions, 'icon' | 'className' | 'style' | 'onClick' | 'onClose'>> = DEFAULT_TOAST_CONFIG
 
 // 生成唯一ID
 const generateId = (): string => {
-  return `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  return `toast-${Date.now()}-${Math.random().toString(36).substr(2, ID_LENGTH)}`
 }
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
   children,
-  position = 'top-right',
-  maxToasts = 5,
+  position = DEFAULT_POSITION,
+  maxToasts = DEFAULT_MAX_TOASTS,
   className,
   style,
   defaultOptions = {},
