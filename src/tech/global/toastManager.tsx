@@ -57,7 +57,11 @@ class ToastManager implements ToastAPI {
   private notify() {
     const snapshot: ReadonlyArray<ToastData> = [...this.toasts]
     this.listeners.forEach((fn) => {
-      try { fn(snapshot) } catch {}
+      try { 
+        fn(snapshot) 
+      } catch (error) {
+        console.warn('Toast listener error:', error)
+      }
     })
   }
 

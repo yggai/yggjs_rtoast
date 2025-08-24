@@ -38,11 +38,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
 }) => {
   const [toasts, setToasts] = useState<ToastData[]>([])
 
-  // 合并默认配置
-  const mergedDefaultOptions = { ...DEFAULT_OPTIONS, ...defaultOptions }
-
   // 添加 Toast
   const addToast = useCallback((message: ReactNode, options: ToastOptions = {}): string => {
+    const mergedDefaultOptions = { ...DEFAULT_OPTIONS, ...defaultOptions }
     const id = generateId()
     const mergedOptions = { ...mergedDefaultOptions, ...options }
 
@@ -60,7 +58,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       return newToasts
     })
     return id
-  }, [mergedDefaultOptions])
+  }, [defaultOptions])
 
   // 移除 Toast
   const removeToast = useCallback((id: string) => {

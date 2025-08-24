@@ -1,6 +1,6 @@
 {
   "name": "yggjs_rtoast",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "专为React打造的消息通知库 - A professional toast notification library for React",
   "author": "源滚滚",
   "license": "MIT",
@@ -59,8 +59,8 @@
     "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",

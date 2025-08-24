@@ -49,14 +49,14 @@ export const Toast: React.FC<ToastProps> = ({ toast, onDismiss }) => {
       onDismiss(toast.id)
       toast.onClose?.()
     }, 300) // 动画持续时间
-  }, [toast.id, toast.onClose, onDismiss])
+  }, [toast, onDismiss])
 
   const handleClick = useCallback(() => {
     toast.onClick?.()
     if (toast.onClick) {
       handleDismiss()
     }
-  }, [toast.onClick, handleDismiss])
+  }, [toast, handleDismiss])
 
   const handleMouseEnter = useCallback(() => {
     if (toast.pauseOnHover) {

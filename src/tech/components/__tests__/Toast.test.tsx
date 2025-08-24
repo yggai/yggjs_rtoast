@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { Toast } from '../Toast'
 import { ToastData } from '../../types'
 
@@ -37,14 +37,18 @@ describe('Toast Component', () => {
     expect(toastElement).toHaveClass('ygg-toast--info')
   })
 
-  it('applies correct CSS classes for styling', () => {
+  it('applies correct CSS classes for styling', async () => {
     render(<Toast toast={mockToast} onDismiss={mockOnDismiss} />)
     const toastElement = screen.getByRole('alert')
     
     // 验证基础样式类
     expect(toastElement).toHaveClass('ygg-toast')
     expect(toastElement).toHaveClass('ygg-toast--info')
-    expect(toastElement).toHaveClass('ygg-toast--slide-enter')
+    
+    // 等待动画类出现
+    await waitFor(() => {
+      expect(toastElement).toHaveClass('ygg-toast--slide-enter')
+    })
     
     // 验证图标容器
     const iconContainer = document.querySelector('.ygg-toast__icon')
