@@ -15,6 +15,3 @@ export type {
   UseToastReturn,
   ToastAPI,
 } from './types'
-
-// 样式导出 - 确保样式被正确打包
-import './styles/toast.css'

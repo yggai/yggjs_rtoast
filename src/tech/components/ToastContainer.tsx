@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
-import clsx from 'clsx'
 import { Toast } from './Toast'
 import { ToastData, ToastPosition } from '../types'
 import { DEFAULT_POSITION, DEFAULT_MAX_TOASTS } from '../constants'
-import '../styles/toast.css'
+import { createContainerStyles, getContainerClassName } from '../styles/toastStyles'
+import { cx } from '../styles/css-in-js'
 
 /**
  * ToastContainer组件的属性接口
@@ -47,12 +47,19 @@ const ToastContainerComponent: React.FC<ToastContainerProps> = ({
       : visibleToasts
   }, [visibleToasts, position])
 
-  // 缓存容器CSS类名，避免重复计算
-  const containerClasses = useMemo(() => clsx(
-    'ygg-toast-container',
-    `ygg-toast-container--${position}`,
-    className
-  ), [position, className])
+  // 生成容器样式类名
+  const containerClassName = useMemo(() => {
+    return createContainerStyles({ position })
+  }, [position])
+
+  // 合并最终的CSS类名，包含语义化类名以兼容测试
+  const finalClassName = useMemo(() => {
+    return cx(
+      getContainerClassName(position),
+      containerClassName,
+      className
+    )
+  }, [position, containerClassName, className])
 
   // 如果没有Toast则不渲染任何内容
   if (toasts.length === 0) {
@@ -60,7 +67,7 @@ const ToastContainerComponent: React.FC<ToastContainerProps> = ({
   }
 
   return (
-    <div className={containerClasses} style={style}>
+    <div className={finalClassName} style={style}>
       {sortedToasts.map((toast) => (
         <Toast
           key={toast.id}
