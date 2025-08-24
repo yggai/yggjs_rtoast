@@ -14,20 +14,42 @@ import {
   ID_LENGTH
 } from '../constants'
 
+/**
+ * Toast上下文对象
+ * 提供Toast相关的方法和状态
+ */
 export const ToastContext = createContext<ToastContextType | null>(null)
 
+/**
+ * ToastProvider组件的属性接口
+ */
 interface ToastProviderProps extends ToastContainerOptions {
+  /** 子组件 */
   children: ReactNode
 }
 
-// 默认配置
+/**
+ * 默认Toast配置
+ * 排除可选的自定义属性，确保所有必需属性都有默认值
+ */
 const DEFAULT_OPTIONS: Required<Omit<ToastOptions, 'icon' | 'className' | 'style' | 'onClick' | 'onClose'>> = DEFAULT_TOAST_CONFIG
 
-// 生成唯一ID
+/**
+ * 生成唯一的Toast ID
+ * 
+ * @returns 格式为 "toast-{timestamp}-{random}" 的唯一标识符
+ */
 const generateId = (): string => {
   return `toast-${Date.now()}-${Math.random().toString(36).substr(2, ID_LENGTH)}`
 }
 
+/**
+ * ToastProvider组件
+ * 提供Toast功能的上下文提供者，管理全局Toast状态
+ * 
+ * @param props - ToastProvider组件的属性
+ * @returns React功能组件
+ */
 export const ToastProvider: React.FC<ToastProviderProps> = ({
   children,
   position = DEFAULT_POSITION,
@@ -36,9 +58,16 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
   style,
   defaultOptions = {},
 }) => {
+  // Toast列表状态
   const [toasts, setToasts] = useState<ToastData[]>([])
 
-  // 添加 Toast
+  /**
+   * 添加新的Toast
+   * 
+   * @param message - Toast消息内容
+   * @param options - Toast配置选项
+   * @returns Toast的唯一ID
+   */
   const addToast = useCallback((message: ReactNode, options: ToastOptions = {}): string => {
     const mergedDefaultOptions = { ...DEFAULT_OPTIONS, ...defaultOptions }
     const id = generateId()
@@ -60,33 +89,53 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     return id
   }, [defaultOptions])
 
-  // 移除 Toast
+  /**
+   * 移除指定ID的Toast
+   * 
+   * @param id - 要移除的Toast ID
+   */
   const removeToast = useCallback((id: string) => {
     setToasts(prev => prev.filter(toast => toast.id !== id))
   }, [])
 
-  // 清空所有 Toast
+  /**
+   * 清空所有Toast
+   */
   const clearToasts = useCallback(() => {
     setToasts([])
   }, [])
 
-  // 创建类型化的 Toast 方法
+  /**
+   * 创建指定类型的Toast方法
+   * 
+   * @param type - Toast类型
+   * @returns 返回创建该类型Toast的方法
+   */
   const createTypedToast = useCallback((type: ToastType) => {
     return (message: ReactNode, options: Omit<ToastOptions, 'type'> = {}) => {
       return addToast(message, { ...options, type })
     }
   }, [addToast])
 
-  // Context 值
+  // 构建上下文值对象
   const contextValue: ToastContextType = {
+    /** 通用Toast方法 */
     toast: addToast,
+    /** 成功类型Toast方法 */
     success: createTypedToast('success'),
+    /** 错误类型Toast方法 */
     error: createTypedToast('error'),
+    /** 警告类型Toast方法 */
     warning: createTypedToast('warning'),
+    /** 信息类型Toast方法 */
     info: createTypedToast('info'),
+    /** 调试类型Toast方法 */
     debug: createTypedToast('debug' as ToastType),
+    /** 关闭指定Toast方法 */
     dismiss: removeToast,
+    /** 关闭所有Toast方法 */
     dismissAll: clearToasts,
+    /** 当前Toast列表 */
     toasts,
   }
 

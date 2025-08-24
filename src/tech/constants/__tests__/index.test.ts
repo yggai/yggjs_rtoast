@@ -13,49 +13,53 @@ import {
   ID_LENGTH,
 } from '../index'
 
-describe('Constants', () => {
-  describe('Animation constants', () => {
-    it('should have correct animation duration', () => {
+/**
+ * 常量配置测试套件
+ * 验证所有导出的常量值和类型的正确性
+ */
+describe('常量配置', () => {
+  describe('动画常量', () => {
+    it('应该有正确的动画持续时间', () => {
       expect(ANIMATION_DURATION).toBe(300)
       expect(typeof ANIMATION_DURATION).toBe('number')
     })
   })
 
-  describe('Duration constants', () => {
-    it('should have correct default durations', () => {
+  describe('持续时间常量', () => {
+    it('应该有正确的默认持续时间', () => {
       expect(DEFAULT_DURATION).toBe(4000)
       expect(SHORT_DURATION).toBe(3000)
       expect(MEDIUM_DURATION).toBe(5000)
       expect(LONG_DURATION).toBe(8000)
     })
 
-    it('should have durations in ascending order', () => {
+    it('持续时间应该按升序排列', () => {
       expect(SHORT_DURATION).toBeLessThan(DEFAULT_DURATION)
       expect(DEFAULT_DURATION).toBeLessThan(MEDIUM_DURATION)
       expect(MEDIUM_DURATION).toBeLessThan(LONG_DURATION)
     })
   })
 
-  describe('Performance constants', () => {
-    it('should have correct performance values', () => {
-      expect(PROGRESS_UPDATE_INTERVAL).toBe(16) // 60fps
+  describe('性能常量', () => {
+    it('应该有正确的性能配置值', () => {
+      expect(PROGRESS_UPDATE_INTERVAL).toBe(16) // 60fps帧率
       expect(RENDER_DELAY).toBe(50)
     })
   })
 
-  describe('Container constants', () => {
-    it('should have correct default max toasts', () => {
+  describe('容器常量', () => {
+    it('应该有正确的默认最大Toast数量', () => {
       expect(DEFAULT_MAX_TOASTS).toBe(5)
       expect(typeof DEFAULT_MAX_TOASTS).toBe('number')
     })
 
-    it('should have correct default position', () => {
+    it('应该有正确的默认位置', () => {
       expect(DEFAULT_POSITION).toBe('top-right')
     })
   })
 
-  describe('Default configuration', () => {
-    it('should have correct default toast config', () => {
+  describe('默认配置', () => {
+    it('应该有正确的默认Toast配置', () => {
       expect(DEFAULT_TOAST_CONFIG).toEqual({
         type: 'info',
         duration: DEFAULT_DURATION,
@@ -66,8 +70,8 @@ describe('Constants', () => {
     })
   })
 
-  describe('Easing functions', () => {
-    it('should have correct easing values', () => {
+  describe('缓动函数', () => {
+    it('应该有正确的缓动函数值', () => {
       expect(EASING).toEqual({
         easeOutCubic: 'cubic-bezier(0.33, 1, 0.68, 1)',
         easeInOut: 'ease-in-out',
@@ -76,8 +80,8 @@ describe('Constants', () => {
     })
   })
 
-  describe('ID generation constants', () => {
-    it('should have correct ID length', () => {
+  describe('ID生成常量', () => {
+    it('应该有正确的ID长度', () => {
       expect(ID_LENGTH).toBe(9)
       expect(typeof ID_LENGTH).toBe('number')
     })

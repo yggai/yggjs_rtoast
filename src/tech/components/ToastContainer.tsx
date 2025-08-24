@@ -5,15 +5,28 @@ import { ToastData, ToastPosition } from '../types'
 import { DEFAULT_POSITION, DEFAULT_MAX_TOASTS } from '../constants'
 import '../styles/toast.css'
 
+/**
+ * ToastContainer组件的属性接口
+ */
 interface ToastContainerProps {
+  /** Toast数组 */
   toasts: ToastData[]
+  /** Toast显示位置 */
   position?: ToastPosition
+  /** 最大显示Toast数量 */
   maxToasts?: number
+  /** 自定义CSS类名 */
   className?: string
+  /** 自定义样式 */
   style?: React.CSSProperties
+  /** Toast关闭回调函数 */
   onDismiss: (id: string) => void
 }
 
+/**
+ * ToastContainer组件实现
+ * 负责管理和渲染多个Toast组件的容器
+ */
 const ToastContainerComponent: React.FC<ToastContainerProps> = ({
   toasts,
   position = DEFAULT_POSITION,
@@ -22,26 +35,26 @@ const ToastContainerComponent: React.FC<ToastContainerProps> = ({
   style,
   onDismiss,
 }) => {
-  // Memoize visible toasts calculation to avoid unnecessary re-computation
+  // 缓存可见Toast列表计算，避免不必要的重复计算
   const visibleToasts = useMemo(() => {
     return toasts.slice(0, maxToasts)
   }, [toasts, maxToasts])
 
-  // Memoize sorted toasts calculation for position-based ordering
+  // 缓存基于位置的Toast排序计算
   const sortedToasts = useMemo(() => {
     return position.includes('bottom') 
       ? [...visibleToasts].reverse() 
       : visibleToasts
   }, [visibleToasts, position])
 
-  // Memoize container classes to avoid recalculation
+  // 缓存容器CSS类名，避免重复计算
   const containerClasses = useMemo(() => clsx(
     'ygg-toast-container',
     `ygg-toast-container--${position}`,
     className
   ), [position, className])
 
-  // Early return for empty toast list
+  // 如果没有Toast则不渲染任何内容
   if (toasts.length === 0) {
     return null
   }
@@ -59,9 +72,12 @@ const ToastContainerComponent: React.FC<ToastContainerProps> = ({
   )
 }
 
-// Memoize the entire ToastContainer with custom comparison
+/**
+ * 使用React.memo优化的ToastContainer组件
+ * 通过自定义比较函数避免不必要的重渲染
+ */
 export const ToastContainer = React.memo(ToastContainerComponent, (prevProps, nextProps) => {
-  // Shallow comparison for most props
+  // 对大部分属性进行浅比较
   if (
     prevProps.position !== nextProps.position ||
     prevProps.maxToasts !== nextProps.maxToasts ||
@@ -72,12 +88,12 @@ export const ToastContainer = React.memo(ToastContainerComponent, (prevProps, ne
     return false
   }
 
-  // Deep comparison for toasts array
+  // 对Toast数组进行深度比较
   if (prevProps.toasts.length !== nextProps.toasts.length) {
     return false
   }
 
-  // Check if any toast has changed
+  // 检查任何Toast是否发生变化
   for (let i = 0; i < prevProps.toasts.length; i++) {
     const prevToast = prevProps.toasts[i]
     const nextToast = nextProps.toasts[i]
