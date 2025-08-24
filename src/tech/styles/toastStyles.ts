@@ -382,30 +382,36 @@ export const createAnimationStyles = styled<{
 })
 
 /**
- * 创建响应式样式
+ * 创建响应式样式（懒加载）
  */
-export const createResponsiveStyles = css(`
-  @media (max-width: ${theme.breakpoints.mobile}) {
-    .ygg-toast-container {
-      left: ${theme.sizes.mobile.containerPadding} !important;
-      right: ${theme.sizes.mobile.containerPadding} !important;
-      max-width: none;
-      padding: ${theme.sizes.mobile.containerPadding};
-    }
-    
-    .ygg-toast-container--top-center,
-    .ygg-toast-container--bottom-center {
-      transform: none;
-    }
-    
-    .ygg-toast {
-      padding: ${theme.sizes.mobile.toastPadding};
-      font-size: ${theme.sizes.fontSize.sm};
-    }
+let responsiveStylesLoaded = false
+export const loadResponsiveStyles = (): void => {
+  if (responsiveStylesLoaded || typeof document === 'undefined' || process.env.NODE_ENV === 'test') {
+    return
   }
-`)
-
-// 在浏览器环境中插入响应式样式
-if (typeof document !== 'undefined' && process.env.NODE_ENV !== 'test') {
-  createResponsiveStyles
+  
+  css(`
+    @media (max-width: ${theme.breakpoints.mobile}) {
+      .ygg-toast-container {
+        left: ${theme.sizes.mobile.containerPadding} !important;
+        right: ${theme.sizes.mobile.containerPadding} !important;
+        max-width: none;
+        padding: ${theme.sizes.mobile.containerPadding};
+      }
+      
+      .ygg-toast-container--top-center,
+      .ygg-toast-container--bottom-center {
+        transform: none;
+      }
+      
+      .ygg-toast {
+        padding: ${theme.sizes.mobile.toastPadding};
+        font-size: ${theme.sizes.fontSize.sm};
+      }
+    }
+  `, 'ygg', 'responsive-styles')
+  
+  responsiveStylesLoaded = true
 }
+
+// 在ToastContainer首次渲染时加载响应式样式

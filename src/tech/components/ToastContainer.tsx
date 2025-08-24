@@ -2,8 +2,11 @@ import React, { useMemo } from 'react'
 import { Toast } from './Toast'
 import { ToastData, ToastPosition } from '../types'
 import { DEFAULT_POSITION, DEFAULT_MAX_TOASTS } from '../constants'
-import { createContainerStyles, getContainerClassName } from '../styles/toastStyles'
+import { createContainerStyles, getContainerClassName, loadResponsiveStyles } from '../styles/toastStyles'
 import { cx } from '../styles/css-in-js'
+
+// 确保响应式样式被加载
+loadResponsiveStyles()
 
 /**
  * ToastContainer组件的属性接口

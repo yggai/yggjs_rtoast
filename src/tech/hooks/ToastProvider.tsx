@@ -80,10 +80,15 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       ...mergedOptions,
     }
 
-    console.log('添加Toast:', { id, message, options: mergedOptions })
+    if (process.env.NODE_ENV === 'development') {
+      console.log('添加Toast:', { id, message, options: mergedOptions })
+    }
+    
     setToasts(prev => {
       const newToasts = [newToast, ...prev]
-      console.log('更新Toast列表:', newToasts.length, '个Toast')
+      if (process.env.NODE_ENV === 'development') {
+        console.log('更新Toast列表:', newToasts.length, '个Toast')
+      }
       return newToasts
     })
     return id
